@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('contenido')
     <h1 id="dashboard" class="text-2xl text-blue-950 font-medium mb-3">Dashboard</h1>
     <div class="flex justify-between">
@@ -40,24 +39,58 @@
                     </div>
                     <input type="search" id="search" class="block w-750 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " placeholder="busca por titulo de la incidencia" required />
                 </div> 
-                <ul class="text-xs text-gray-900 bg-gray-50 border-t-0 border-x-1 border-b-1 border-gray-300 rounded">
-                    <li class="w-full px-4 py-2 border-b border-gray-200">Profile</li>
-                    <li class="w-full px-4 py-2 border-b border-gray-200 ">Settings</li>
-                    <li class="w-full px-4 py-2 border-b border-gray-200 ">Messages</li>
-                    <li class="w-full px-4 py-2 rounded-b-lg">Download</li>
+                <ul class="flex flex-col text-xs text-gray-900 bg-gray-50 border-t-0 border-x-1 border-b-1 border-gray-300 rounded" id="contenedor-lista">
+                    
+
                 </ul>
             </form>
 
         </div>
     
-    
     </div>
 
+    <div class="mt-3 w-2xl p-3 border border-gray-200 bg-white">
+        <h1 class="text-center font-medium ">Incidencias de Sucursales</h1>
+        <canvas class="" id="myChart" ></canvas>
+    </div>
 
 @endsection
 
 @push('scripts')
+
     <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        console.log("mostrando grafica...");
+        const sucursales = @json($sucursales);
+        const totales = @json($totales);
+        const ctx = document.getElementById('myChart');
+
+       new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: sucursales,
+        datasets: [{
+            label: 'incidencias de sucursales',
+            data: totales,
+            borderWidth: 1
+        }]
+        },
+        options: {
+            layout: {
+                padding: 10
+            },
+            scales: {
+                y: {
+                beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+    </script>
+    
 @endpush
 
 

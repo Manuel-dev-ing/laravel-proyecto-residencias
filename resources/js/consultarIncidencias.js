@@ -11,7 +11,9 @@
   
     events()
     function events() {
-        selectAsignarUsuario.addEventListener('change', fnAsignarUsuario)
+        if (selectAsignarUsuario) {
+            selectAsignarUsuario.addEventListener('change', fnAsignarUsuario)
+        }
     }
 
     // MODAL
@@ -28,22 +30,22 @@
             openBtn.addEventListener('click', () => {
                 modal.classList.remove('hidden');
             });
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+    
+            cancelBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+    
+            window.addEventListener('click', (e) => {
+                
+                if (e.target === backdrop) {
+                    modal.classList.add('hidden');
+                }
+            });
         }
 
-        closeBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-
-        cancelBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-
-        window.addEventListener('click', (e) => {
-            
-            if (e.target === backdrop) {
-                modal.classList.add('hidden');
-            }
-        });
     //FIN MODAL
 
 
